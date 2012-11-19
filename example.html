@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>iz.prettydate.js</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="iz.prettydate.js"></script>
+<script>
+$.izprettydate_loadLocale('sv','');
+
+$(function(){
+	$(".pretty").izprettydate();
+});
+</script>
+</head>
+<body>
+test
+<ul>
+	<li>Example 1 <time class="pretty" >2012-01-01</time></li>
+	<li>Example 1 <time class="pretty" >2012-11-01</time></li>
+	<li>Example 1 <time class="pretty" >2012-11-18T20:12</time></li>
+	<li>Example 1 <time class="pretty" >2012-11-19T23:59+01:00</time></li>
+	<li>Example 1 <time class="pretty" >2012-11-19T20:00</time></li>
+	<li>Example 1 <time class="pretty" >2012-11-20T00:01+01:00</time></li>
+</ul>
+</body>
+</html>
