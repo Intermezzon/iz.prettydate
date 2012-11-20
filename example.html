@@ -7,14 +7,15 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="iz.prettydate.js"></script>
 <script>
-$.izprettydate_loadLocale('sv','');
+$.izprettydate_loadLocale('sv','','2012-11-20T15:13+01:00');
 
 $(function(){
 	$(".pretty").izprettydate();
+	$(".prettydate").izprettydate();
 });
 </script>
 <style>
-time.pretty{
+.pretty,.prettydate{
 	border-bottom:1px #666 dotted;
 	cursor: help;
 }
@@ -23,14 +24,17 @@ time.pretty{
 <body>
 test
 <ol>
-	<li>Example: <time class="pretty" >01dw.03.2012</time></li>
+	<li>Example: <time class="pretty" >01dw.03.2012</time> (wrong format)</li>
 	<li>Example: <time class="pretty" >2012-01-01</time></li>
 	<li>Example: <time class="pretty" >2012-11-01</time></li>
 	<li>Example: <time class="pretty" >2012-11-18T20:12</time></li>
 	<li>Example: <time class="pretty" >2012-11-19T23:59+01:00</time></li>
 	<li>Example: <time class="pretty" >2012-11-19T20:00</time></li>
 	<li>Example: <time class="pretty" >2012-11-20T00:01+01:00</time></li>
-	<li>Example: <time class="pretty" >2012-11-20T13:00+01:00</time></li>
+	<li>Example: <time class="pretty" >2012-11-20T15:00+01:00</time> (should update after a minute)</li>
+	<li>Example: <time class="prettydate" >2012-11-20</time></li>
+	<li>Example: <time class="prettydate" >2012-11-19</time></li>
+	<li>Example: <time class="prettydate" >2012-11-21</time></li>
 </ol>
 </body>
 </html>

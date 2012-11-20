@@ -1,14 +1,18 @@
+var izprettydateContainer	= $();
 
 (function($) {
 	$.fn["izprettydate"] = function(options){
+		if(!options){options={};}
+		
+		izprettydateContainer=izprettydateContainer.add($(this));
 		
 		var Iz_PrettyDate=function(datestring){
 			this.date	= new Date(datestring);
 			
 			this.alignDate	= function (){
 				return new Iz_PrettyDate(this.date.toDateString());
-			}
-		}
+			};
+		};
 		
 		var formatString=function (now,date,formated){
 			var dateDiff	= Math.abs(now.date-date.date)/1000;
@@ -43,25 +47,39 @@
 			formated=formated.replace('%Y',y);
 			
 			return formated;
-		}
+		};
 		
 		return this.each( function(){
-			// Parse the current datetime
+			var timeDiff	= 0;
+			if(options.timeDiff){ timeDiff	= options.timeDiff; }
+			
+			var loadOpts=$(this).data('opts');
+			var opts = $.extend({}, $.fn.izprettydate.defaults, options,loadOpts);
+			
 			var content	= $(this).html();
+			if(!opts.content){ opts.content=content;
+			}else{ content=opts.content; }
+			
+			if(opts.showTime=='auto'){
+				opts.showTime=(content.indexOf('T')!=-1);
+			}
+			$(this).data('opts',opts);
+			// Parse the current datetime
 			var date	= new Iz_PrettyDate(content);
 			if(isNaN(date.date)){
 				return;
 			}
 			var formated	= content;
 			var settings	= $.fn.izprettydate.settings;
-			var now		= new Iz_PrettyDate(settings.now); 
+			var now			= new Iz_PrettyDate(settings.now); 
+			now.date.setTime(now.date.getTime()+timeDiff );
 			var dateDiff	= Math.abs(now.date-date.date)/1000;
-			settings	= (date.date<now.date)?settings.localization.past:settings.localization.future;
+			settings		= (date.date<now.date)?settings.localization.past:settings.localization.future;
 			
 			var dayDiff	= Math.abs(Math.round( (now.alignDate().date-date.alignDate().date)/(60*60*24*1000) ));
-			if(dateDiff<60){
+			if(dateDiff<60 && opts.showTime){
 				formated	= settings.now;
-			}else if(dateDiff<60*60){
+			}else if(dateDiff<60*60 && opts.showTime){
 				formated	= settings.minute;
 				if($.isArray(formated)){
 					if(Math.floor(dateDiff/60)==1){
@@ -70,8 +88,10 @@
 						formated=formated[1];
 					}
 				}
+			}else if(dayDiff==0 && !opts.showTime){
+				formated	=  settings.sameday;
 			}else if(dayDiff==1){
-				formated	= settings.oneday;
+				formated	=  opts.showTime?settings.oneday:settings.lastday;
 			}else if(dateDiff<24*60*60){
 				formated	= settings.hour;
 				if($.isArray(formated)){
@@ -113,7 +133,9 @@
 				oneday: 'Yestday at %H:%I',
 				day: '%d days ago',
 				month: '%M %D',
-				year: '%M %Y'
+				year: '%M %Y',
+				sameday: 'Today',
+				lastday: 'Yesterday'
 			},
 			future: {
 				now: 'Very soon',
@@ -122,10 +144,15 @@
 				oneday: 'Tomorrow at %H:%I',
 				day: 'In %d days',
 				month: '%M %D',
-				year: '%M %Y'
+				year: '%M %Y',
+				sameday: 'Today',
+				lastday: 'Tomorrow'
 			},
 			month: ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec']
 		}
+	};
+	$.fn.izprettydate.defaults = {
+		'showTime':'auto'	
 	};
 
 	$.izprettydate_loadLocale = function(locale,path,now){
@@ -138,6 +165,11 @@
 		if(now){
 			$.fn.izprettydate.settings.now	= now;
 		}
+		var timeDiff=0;
+		setInterval( function(){
+			timeDiff+=30000;
+			izprettydateContainer.izprettydate({timeDiff:timeDiff});
+		},30000);
 	};
 	
 })(jQuery);
