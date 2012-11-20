@@ -2,8 +2,8 @@ $.extend(true,$.fn.izprettydate.settings,{
 		localization: {
 			past: {
 				now: 'Just nu',
-				minute: '%i minuter sedan',
-				hour: '%h timmar sedan',
+				minute: ['En minut sedan','%i minuter sedan'],
+				hour: ['En timme sedan','%h timmar sedan'],
 				oneday: 'Igår %H:%I',
 				day: '%d dagar sedan',
 				month: '%M %D',
@@ -11,8 +11,8 @@ $.extend(true,$.fn.izprettydate.settings,{
 			},
 			future: {
 				now: 'Snart',
-				minute: 'Om %i minuter',
-				hour: 'Om %h timmar',
+				minute: ['Om en minut','Om %i minuter'],
+				hour: ['Om en timme','Om %h timmar'],
 				oneday: 'Imorgon %H:%I',
 				day: 'Om %d dagar',
 				month: '%M %D',

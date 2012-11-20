@@ -63,10 +63,24 @@
 				formated	= settings.now;
 			}else if(dateDiff<60*60){
 				formated	= settings.minute;
+				if($.isArray(formated)){
+					if(Math.floor(dateDiff/60)==1){
+						formated=formated[0];
+					}else{
+						formated=formated[1];
+					}
+				}
 			}else if(dayDiff==1){
 				formated	= settings.oneday;
 			}else if(dateDiff<24*60*60){
 				formated	= settings.hour;
+				if($.isArray(formated)){
+					if(Math.floor(dateDiff/3600)==1){
+						formated=formated[0];
+					}else{
+						formated=formated[1];
+					}
+				}
 			}else if(now.date.getFullYear()!=date.date.getFullYear()){
 				// Different year
 				formated	= settings.year;
@@ -94,8 +108,8 @@
 			formated: '%Y-%m-%D %H:%I',
 			past: {
 				now: 'Just now',
-				minute: '%i minutes ago',
-				hour: '%h hours ago',
+				minute: ['One minute ago','%i minutes ago'],
+				hour: ['One hour ago','%h hours ago'],
 				oneday: 'Yestday at %H:%I',
 				day: '%d days ago',
 				month: '%M %D',
@@ -103,8 +117,8 @@
 			},
 			future: {
 				now: 'Very soon',
-				minute: 'In %i minutes',
-				hour: 'In %h hours',
+				minute: ['I a minute','In %i minutes'],
+				hour: ['In one hour','In %h hours'],
 				oneday: 'Tomorrow at %H:%I',
 				day: 'In %d days',
 				month: '%M %D',
