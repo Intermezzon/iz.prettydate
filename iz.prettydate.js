@@ -49,6 +49,9 @@
 			// Parse the current datetime
 			var content	= $(this).html();
 			var date	= new Iz_PrettyDate(content);
+			if(isNaN(date.date)){
+				return;
+			}
 			var formated	= content;
 			var settings	= $.fn.izprettydate.settings;
 			var now		= new Iz_PrettyDate(settings.now); 
