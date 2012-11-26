@@ -155,21 +155,27 @@ var izprettydateContainer	= $();
 		'showTime':'auto'	
 	};
 
-	$.izprettydate_loadLocale = function(locale,path,now){
-		var locales	= ['sv'];
-		for(var i=0;i<locales.length;i++){
-			if(locales[i]==locale.substr(0,locales[i].length)){
-				document.write('<script src="'+path+'iz.prettydate.'+locales[i]+'.js"></script>');
+	$.extend({
+		izprettydate: function(options,locale,path,now){
+			if(options=='loadLocale'){
+				var locales	= ['sv'];
+				for(var i=0;i<locales.length;i++){
+					if(locales[i]==locale.substr(0,locales[i].length)){
+						document.write('<script src="'+path+'iz.prettydate.'+locales[i]+'.js"></script>');
+					}
+				}
+				if(now){
+					$.fn.izprettydate.settings.now	= now;
+				}
+				var timeDiff=0;
+				setInterval( function(){
+					timeDiff+=60000;
+					izprettydateContainer.izprettydate({timeDiff:timeDiff});
+				},60000);
 			}
 		}
-		if(now){
-			$.fn.izprettydate.settings.now	= now;
-		}
-		var timeDiff=0;
-		setInterval( function(){
-			timeDiff+=30000;
-			izprettydateContainer.izprettydate({timeDiff:timeDiff});
-		},30000);
-	};
+	});
+	
+	
 	
 })(jQuery);
